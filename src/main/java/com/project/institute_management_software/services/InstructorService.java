@@ -11,10 +11,12 @@ import java.util.List;
 
 @Service
 public class InstructorService {
+
     @Autowired
     private InstructorRepository instructorRepository;
 
-    public Instructor addInstructor(AddInstructorRequest addInstructorRequest){
+    // Adds a new instructor to the system
+    public Instructor addInstructor(AddInstructorRequest addInstructorRequest) {
         Instructor instructor = new Instructor();
         instructor.setName(addInstructorRequest.getName());
         instructor.setEmail(addInstructorRequest.getEmail());
@@ -22,30 +24,34 @@ public class InstructorService {
         return instructorRepository.save(instructor);
     }
 
-    public Instructor getInstructorById(int id){
+    // Retrieves an instructor by their ID
+    public Instructor getInstructorById(int id) {
         return instructorRepository.findById(id).orElse(null);
     }
 
-    public List<Instructor> getAllInstructors(){
+    // Retrieves a list of all instructors
+    public List<Instructor> getAllInstructors() {
         return instructorRepository.findAll();
     }
 
-    public Instructor editInstructor(int id, EditInstructorRequest editInstructor){
+    // Updates the details of an existing instructor
+    public Instructor editInstructor(int id, EditInstructorRequest editInstructor) {
         Instructor instructor = instructorRepository.findById(id).orElse(null);
-        if(instructor != null){
-        instructor.setName(editInstructor.getName());
-        instructor.setEmail(editInstructor.getEmail());
-        instructor.setSpecialization(editInstructor.getSpecialization());
+        if (instructor != null) {
+            instructor.setName(editInstructor.getName());
+            instructor.setEmail(editInstructor.getEmail());
+            instructor.setSpecialization(editInstructor.getSpecialization());
         }
         return instructorRepository.save(instructor);
-
     }
 
-    public Instructor deleteInstructor(int id){
+    // Deletes an instructor by their ID
+    public Instructor deleteInstructor(int id) {
         Instructor existingInstructor = instructorRepository.findById(id).orElse(null);
-        if(existingInstructor != null){
+        if (existingInstructor != null) {
             instructorRepository.deleteById(id);
         }
         return existingInstructor;
     }
 }
+

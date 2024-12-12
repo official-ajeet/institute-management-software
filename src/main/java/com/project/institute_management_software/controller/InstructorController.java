@@ -11,81 +11,110 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * REST controller for managing instructor-related operations.
+ */
 @RestController
 @RequestMapping("/api/instructor")
 public class InstructorController {
+
     @Autowired
     private InstructorService instructorService;
+
     @Autowired
     private InstructorRepository instructorRepository;
-    
+
+    /**
+     * Add a new instructor.
+     *
+     * @param addInstructorRequest Request object containing instructor details.
+     * @return Response containing the added instructor details.
+     */
     @PostMapping("/add")
-    public ResponseEntity<InstructorResponse> addInstructor(@RequestBody AddInstructorRequest addInstructorRequest){
-
+    public ResponseEntity<InstructorResponse> addInstructor(@RequestBody AddInstructorRequest addInstructorRequest) {
         Instructor instructor = instructorService.addInstructor(addInstructorRequest);
-
-        InstructorResponse instructorResponse = InstructorResponse.toInstructorResponse(instructor);
-
-        instructorResponse.setMessage("Instructor Added Successfully.");
-        return ResponseEntity.ok(instructorResponse);
+        InstructorResponse response = InstructorResponse.toInstructorResponse(instructor);
+        response.setMessage("Instructor added successfully.");
+        return ResponseEntity.ok(response);
     }
 
+    /**
+     * Retrieve an instructor by their ID.
+     *
+     * @param id The ID of the instructor.
+     * @return Response containing the instructor details or an error message.
+     */
     @GetMapping("/getById")
-    public ResponseEntity<InstructorResponse>getInstructorById(@RequestParam int id){
-        InstructorResponse instructorResponse = new InstructorResponse();
-         Instructor instructor = instructorService.getInstructorById(id);
-        if(instructor!=null){
-            instructorResponse = InstructorResponse.toInstructorResponse(instructor);
-        }else{
-            instructorResponse.setMessage("instructor doesn't exist by id: "+id);
-            return ResponseEntity.ofNullable(instructorResponse);
+    public ResponseEntity<InstructorResponse> getInstructorById(@RequestParam int id) {
+        Instructor instructor = instructorService.getInstructorById(id);
+        if (instructor == null) {
+            InstructorResponse response = new InstructorResponse();
+            response.setMessage("Instructor not found with ID: " + id);
+            return ResponseEntity.ofNullable(response);
         }
-
-        return ResponseEntity.ok(instructorResponse);
+        return ResponseEntity.ok(InstructorResponse.toInstructorResponse(instructor));
     }
 
+    /**
+     * Retrieve all instructors.
+     *
+     * @return List of all instructors.
+     */
     @GetMapping("/getAll")
-    public ResponseEntity<List<InstructorResponse>> getAll(){
-        List<Instructor> instructorList = instructorService.getAllInstructors();
-        List<InstructorResponse> instructorResponse = instructorList.stream()
+    public ResponseEntity<List<InstructorResponse>> getAllInstructors() {
+        List<Instructor> instructors = instructorService.getAllInstructors();
+        List<InstructorResponse> responses = instructors.stream()
                 .map(InstructorResponse::toInstructorResponse)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(instructorResponse);
-
+        return ResponseEntity.ok(responses);
     }
 
+    /**
+     * Update an instructor's details.
+     *
+     * @param id                   The ID of the instructor to update.
+     * @param editInstructorRequest Request object containing updated instructor details.
+     * @return Response containing updated instructor details or an error message.
+     */
     @PutMapping("/update")
-    public ResponseEntity<InstructorResponse>udpate(@RequestParam int id, @RequestBody EditInstructorRequest editinstructorRequest){
-        Instructor instructor = instructorService.editInstructor(id, editinstructorRequest );
-        InstructorResponse instructorResponse = new InstructorResponse();
-        if(instructor != null){
-
-            instructorResponse = InstructorResponse.toInstructorResponse(instructor);
-            instructorResponse.setMessage("instructor updated successfully with id: "+id);
-            return ResponseEntity.ok(instructorResponse);
-        }else{
-            instructorResponse.setMessage("instructor doesn't exists with id: "+id+"can not update");
-            return ResponseEntity.ofNullable(instructorResponse);
+    public ResponseEntity<InstructorResponse> updateInstructor(@RequestParam int id, @RequestBody EditInstructorRequest editInstructorRequest) {
+        Instructor instructor = instructorService.editInstructor(id, editInstructorRequest);
+        if (instructor == null) {
+            InstructorResponse response = new InstructorResponse();
+            response.setMessage("Instructor not found with ID: " + id + ". Update failed.");
+            return ResponseEntity.ofNullable(response);
         }
+        InstructorResponse response = InstructorResponse.toInstructorResponse(instructor);
+        response.setMessage("Instructor updated successfully with ID: " + id);
+        return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("delete")
-    public ResponseEntity<InstructorResponse>delete(@RequestParam int id){
+    /**
+     * Delete an instructor by their ID.
+     *
+     * @param id The ID of the instructor to delete.
+     * @return Response containing success or error message.
+     */
+    @DeleteMapping("/delete")
+    public ResponseEntity<InstructorResponse> deleteInstructor(@RequestParam int id) {
         Instructor instructor = instructorService.deleteInstructor(id);
-        InstructorResponse instructorResponse = new InstructorResponse();
-        if(instructor == null){
-            instructorResponse.setMessage("instructor doesn't exist by id: "+id);
-            return  ResponseEntity.ofNullable(instructorResponse);
-        }else{
-            instructorResponse.setMessage("instructor with id: "+id+"deleted successfully!");
+        InstructorResponse response = new InstructorResponse();
+        if (instructor == null) {
+            response.setMessage("Instructor not found with ID: " + id);
+            return ResponseEntity.ofNullable(response);
         }
-        return ResponseEntity.ok(instructorResponse);
-
+        response.setMessage("Instructor deleted successfully with ID: " + id);
+        return ResponseEntity.ok(response);
     }
 
+    /**
+     * Get the total count of instructors.
+     *
+     * @return Total count of instructors.
+     */
     @GetMapping("/countAll")
-    public long countAll(){
+    public long countInstructors() {
         return instructorRepository.count();
     }
-
 }
+
