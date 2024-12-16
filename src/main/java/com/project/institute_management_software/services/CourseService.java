@@ -45,7 +45,7 @@ public class CourseService {
     }
 
     // Updates an existing course by ID
-    public Course editCourse(int id, EditCourseRequest editCourseRequest) {
+    public Course editCourse(Long id, EditCourseRequest editCourseRequest) {
         Course course = courseRepository.findById(id).orElse(null);
         if (course != null) {
             course.setName(editCourseRequest.getName());
@@ -57,7 +57,7 @@ public class CourseService {
     }
 
     // Retrieves a course by its ID
-    public Course getCourseById(int courseId) {
+    public Course getCourseById(Long courseId) {
         return courseRepository.findById(courseId).orElse(null);
     }
 
@@ -67,7 +67,7 @@ public class CourseService {
     }
 
     // Deletes a course by its ID
-    public Course deleteCourse(int courseId) {
+    public Course deleteCourse(Long courseId) {
         Course existingCourse = courseRepository.findById(courseId).orElse(null);
         if (existingCourse != null) {
             courseRepository.deleteById(courseId);

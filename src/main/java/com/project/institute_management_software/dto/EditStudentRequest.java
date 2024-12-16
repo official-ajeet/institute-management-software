@@ -11,5 +11,5 @@ public class EditStudentRequest {
     private String email;
     private String mobile;
     private LocalDate enrollmentDate;
-    private int courseId;
+    private Long courseId;
 }

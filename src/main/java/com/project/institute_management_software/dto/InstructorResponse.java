@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class InstructorResponse {
-    private int instructorId;
+    private Long instructorId;
     private String name;
     private String email;
     private String specialization;

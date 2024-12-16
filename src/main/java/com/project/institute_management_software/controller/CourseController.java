@@ -48,12 +48,12 @@ public class CourseController {
     }
 
     /**
-     * Retrieves a course by its ID.''
+     * Retrieves a course by its ID.
      * @param id the ID of the course.
      * @return the response containing course details or a not-found message.
      */
     @GetMapping("/getById")
-    public ResponseEntity<CourseResponse> getById(@RequestParam int id) {
+    public ResponseEntity<CourseResponse> getById(@RequestParam Long id) {
         Course course = courseService.getCourseById(id);
         if (course == null) {
             CourseResponse courseResponse = new CourseResponse();
@@ -85,7 +85,7 @@ public class CourseController {
      * @return the response containing updated course information or a not-found message.
      */
     @PutMapping("/update")
-    public ResponseEntity<CourseResponse> update(@RequestParam int id, @RequestBody EditCourseRequest editCourseRequest) {
+    public ResponseEntity<CourseResponse> update(@RequestParam Long id, @RequestBody EditCourseRequest editCourseRequest) {
         Course course = courseService.editCourse(id, editCourseRequest);
         if (course == null) {
             CourseResponse courseResponse = new CourseResponse();
@@ -103,7 +103,7 @@ public class CourseController {
      * @return the response containing a success or not-found message.
      */
     @DeleteMapping("/delete")
-    public ResponseEntity<CourseResponse> deleteById(@RequestParam int id) {
+    public ResponseEntity<CourseResponse> deleteById(@RequestParam Long id) {
         Course course = courseService.deleteCourse(id);
         if (course == null) {
             CourseResponse courseResponse = new CourseResponse();

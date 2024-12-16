@@ -25,7 +25,7 @@ public class InstructorService {
     }
 
     // Retrieves an instructor by their ID
-    public Instructor getInstructorById(int id) {
+    public Instructor getInstructorById(Long id) {
         return instructorRepository.findById(id).orElse(null);
     }
 
@@ -35,7 +35,7 @@ public class InstructorService {
     }
 
     // Updates the details of an existing instructor
-    public Instructor editInstructor(int id, EditInstructorRequest editInstructor) {
+    public Instructor editInstructor(Long id, EditInstructorRequest editInstructor) {
         Instructor instructor = instructorRepository.findById(id).orElse(null);
         if (instructor != null) {
             instructor.setName(editInstructor.getName());
@@ -46,7 +46,7 @@ public class InstructorService {
     }
 
     // Deletes an instructor by their ID
-    public Instructor deleteInstructor(int id) {
+    public Instructor deleteInstructor(Long id) {
         Instructor existingInstructor = instructorRepository.findById(id).orElse(null);
         if (existingInstructor != null) {
             instructorRepository.deleteById(id);

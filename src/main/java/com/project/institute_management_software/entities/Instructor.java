@@ -1,8 +1,6 @@
 package com.project.institute_management_software.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -16,12 +14,11 @@ public class Instructor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; // Unique identifier for the instructor
+    private Long id; // Unique identifier for the instructor
 
-    @NotNull(message = "Name cannot be null")
     private String name; // Full name of the instructor
 
-    @Email(message = "Invalid email format")
+    @Column(unique = true)  // Ensures the email field is unique in the database
     private String email; // Email address of the instructor
 
     private String specialization; // Subject or area of expertise

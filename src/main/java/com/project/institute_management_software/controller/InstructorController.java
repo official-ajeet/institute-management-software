@@ -45,7 +45,7 @@ public class InstructorController {
      * @return Response containing the instructor details or an error message.
      */
     @GetMapping("/getById")
-    public ResponseEntity<InstructorResponse> getInstructorById(@RequestParam int id) {
+    public ResponseEntity<InstructorResponse> getInstructorById(@RequestParam Long id) {
         Instructor instructor = instructorService.getInstructorById(id);
         if (instructor == null) {
             InstructorResponse response = new InstructorResponse();
@@ -77,7 +77,7 @@ public class InstructorController {
      * @return Response containing updated instructor details or an error message.
      */
     @PutMapping("/update")
-    public ResponseEntity<InstructorResponse> updateInstructor(@RequestParam int id, @RequestBody EditInstructorRequest editInstructorRequest) {
+    public ResponseEntity<InstructorResponse> updateInstructor(@RequestParam Long id, @RequestBody EditInstructorRequest editInstructorRequest) {
         Instructor instructor = instructorService.editInstructor(id, editInstructorRequest);
         if (instructor == null) {
             InstructorResponse response = new InstructorResponse();
@@ -96,7 +96,7 @@ public class InstructorController {
      * @return Response containing success or error message.
      */
     @DeleteMapping("/delete")
-    public ResponseEntity<InstructorResponse> deleteInstructor(@RequestParam int id) {
+    public ResponseEntity<InstructorResponse> deleteInstructor(@RequestParam Long id) {
         Instructor instructor = instructorService.deleteInstructor(id);
         InstructorResponse response = new InstructorResponse();
         if (instructor == null) {

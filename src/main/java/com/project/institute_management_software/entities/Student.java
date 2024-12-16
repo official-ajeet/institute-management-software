@@ -18,7 +18,7 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; // Unique identifier for the student
+    private Long id; // Unique identifier for the student
 
     @NotNull(message = "Name cannot be null")
     private String name; // Full name of the student
@@ -28,6 +28,7 @@ public class Student {
     private String mobile; // Contact number of the student
 
     @Email(message = "Invalid email format")
+    @Column(unique = true)  // Ensures the email field is unique in the database
     private String email; // Email address of the student
 
     private LocalDate enrollmentDate; // Date of enrollment in the course

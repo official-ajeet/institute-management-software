@@ -14,14 +14,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CourseResponse {
-    private int courseId;
+    private Long courseId;
     private String name;
     private String description;
     private String duration;
-    private int instructorId;
+    private Long instructorId;
     private String message;
 
-    public CourseResponse(String name, String description, String duration, int instructorId) {
+    public CourseResponse(String name, String description, String duration, Long instructorId) {
         this.name = name;
         this.description = description;
         this.duration = duration;

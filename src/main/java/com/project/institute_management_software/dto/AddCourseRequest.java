@@ -14,6 +14,6 @@ public class AddCourseRequest {
     private String name;
     private String description;
     private String duration;
-    private int instructorId;
+    private Long instructorId;
 
 }

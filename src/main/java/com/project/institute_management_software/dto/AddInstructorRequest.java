@@ -12,5 +12,5 @@ public class AddInstructorRequest {
     private String name;
     private String email;
     private String specialization;
-    private int courseId;
+    private Long courseId;
 }

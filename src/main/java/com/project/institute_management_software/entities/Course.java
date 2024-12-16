@@ -16,7 +16,7 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; // Unique identifier for the course
+    private Long id; // Unique identifier for the course
 
     private String name; // Name of the course
     private String description; // Description of the course content

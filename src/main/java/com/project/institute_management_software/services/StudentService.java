@@ -25,22 +25,29 @@ public class StudentService {
     @Autowired
     private CourseRepository courseRepository;
 
-    // Adds a new student and associates them with a course
+    // Adds a new student and associates them with a course if the course ID is valid
     public Student addStudent(AddStudentRequest addStudentRequest) {
         Student student = new Student();
-        Course course = courseRepository.findById(addStudentRequest.getCourseId()).orElse(null);
+
+        // Set student details
         student.setName(addStudentRequest.getName());
         student.setEmail(addStudentRequest.getEmail());
         student.setMobile(addStudentRequest.getMobile());
         student.setEnrollmentDate(addStudentRequest.getEnrollmentDate());
-        if (course != null) {
-            student.setCourse(course);
+
+        // Check for valid course and associate it
+        courseRepository.findById(addStudentRequest.getCourseId()).ifPresent(student::setCourse);
+
+        // Save only if a course is associated
+        if (student.getCourse() != null) {
+            return studentRepository.save(student);
         }
-        return studentRepository.save(student);
+
+        return student; // Return unsaved student for validation in controller
     }
 
     // Retrieves a student by their ID
-    public Student getStudentById(int studentId) {
+    public Student getStudentById(Long studentId) {
         return studentRepository.findById(studentId).orElse(null);
     }
 
@@ -50,7 +57,7 @@ public class StudentService {
     }
 
     // Updates an existing student's details
-    public Student editStudent(int id, EditStudentRequest editStudentRequest) {
+    public Student editStudent(Long id, EditStudentRequest editStudentRequest) {
         Student existingStudent = studentRepository.findById(id).orElse(null);
         if (existingStudent != null) {
             existingStudent.setName(editStudentRequest.getName());
@@ -62,7 +69,7 @@ public class StudentService {
     }
 
     // Deletes a student by their ID
-    public Student deleteStudentById(int id) {
+    public Student deleteStudentById(Long id) {
         Student existingStudent = studentRepository.findById(id).orElse(null);
         if (existingStudent != null) {
             studentRepository.deleteById(id);

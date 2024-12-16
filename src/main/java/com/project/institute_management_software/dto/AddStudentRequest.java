@@ -12,6 +12,6 @@ public class AddStudentRequest {
     private String name;
     private String email;
     private String mobile;
-    private int courseId;
+    private Long courseId;
     private LocalDate enrollmentDate;
 }

@@ -8,5 +8,5 @@ public class EditCourseRequest {
     private String name;
     private String description;
     private String duration;
-    private int instructorId;
+    private Long instructorId;
 }

@@ -23,20 +23,24 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class StudentResponse {
-    private int studentId;
+    private Long studentId;
     private String name;
     private String mobile;
     private String email;
     private LocalDate enrollmentDate;
-    private int courseId;
+    private Long courseId;
     private String message;
 
-    public StudentResponse(String name, String email, String mobile, LocalDate enrollmentDate, int courseId) {
+    public StudentResponse(String name, String email, String mobile, LocalDate enrollmentDate, Long courseId) {
         this.name = name;
         this.email = email;
         this.mobile = mobile;
         this.enrollmentDate = enrollmentDate;
         this.courseId = courseId;
+    }
+
+    public StudentResponse(String message) {
+        this.message = message;
     }
 
 
@@ -46,7 +50,7 @@ public class StudentResponse {
                 .name(student.getName())
                 .email(student.getEmail())
                 .mobile(student.getMobile())
-                .courseId(student.getCourse() != null? student.getCourse().getId():null)
+                .courseId(student.getCourse() != null? student.getCourse().getId():0)
                 .enrollmentDate(student.getEnrollmentDate())
                 .build();
     }
